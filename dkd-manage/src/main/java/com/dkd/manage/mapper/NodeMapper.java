@@ -58,4 +58,10 @@ public interface NodeMapper
      * @return 结果
      */
     public int deleteNodeByIds(Long[] ids);
+
+    /**
+     * 查询点位列表
+     *
+     */
+    public List<NodeVo> selectNodeList(Node node);
 }
