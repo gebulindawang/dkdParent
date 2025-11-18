@@ -2,6 +2,7 @@ package com.dkd.manage.mapper;
 
 import java.util.List;
 import com.dkd.manage.domain.Node;
+import com.dkd.manage.domain.vo.NodeVo;
 
 /**
  * 点位管理Mapper接口
@@ -60,8 +61,10 @@ public interface NodeMapper
     public int deleteNodeByIds(Long[] ids);
 
     /**
-     * 查询点位列表
-     *
+     * 查询点位管理列表
+     * @param node
+     * @return nodeVo集合
      */
-    public List<NodeVo> selectNodeList(Node node);
+    public List<NodeVo> selectNodeVoList(Node node);
+
 }
