@@ -1,9 +1,14 @@
 package com.dkd.web.controller.common;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.dromara.x.file.storage.core.FileInfo;
+import org.dromara.x.file.storage.core.FileStorageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +36,9 @@ import com.dkd.framework.config.ServerConfig;
 public class CommonController
 {
     private static final Logger log = LoggerFactory.getLogger(CommonController.class);
+
+    @Autowired
+    private FileStorageService fileStorageService;//注入实列
 
     @Autowired
     private ServerConfig serverConfig;
@@ -77,15 +85,21 @@ public class CommonController
     {
         try
         {
-            // 上传文件路径
-            String filePath = RuoYiConfig.getUploadPath();
-            // 上传并返回新文件名称
-            String fileName = FileUploadUtils.upload(filePath, file);
-            String url = serverConfig.getUrl() + fileName;
+//            // 上传文件路径
+//            String filePath = RuoYiConfig.getUploadPath();
+//            // 上传并返回新文件名称
+//            String fileName = FileUploadUtils.upload(filePath, file);
+//            String url = serverConfig.getUrl() + fileName;
+
+            String objectName = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + "/";
+            FileInfo fileInfo = fileStorageService.of(file)
+                    .setPath(objectName)
+                    .upload();
+
             AjaxResult ajax = AjaxResult.success();
-            ajax.put("url", url);
-            ajax.put("fileName", fileName);
-            ajax.put("newFileName", FileUtils.getName(fileName));
+            ajax.put("url", fileInfo.getUrl());
+            ajax.put("fileName", fileInfo.getUrl());
+            ajax.put("newFileName", FileUtils.getName(fileInfo.getUrl()));
             ajax.put("originalFilename", file.getOriginalFilename());
             return ajax;
         }
