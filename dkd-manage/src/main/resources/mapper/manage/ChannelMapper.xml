@@ -38,31 +38,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectChannelVo"/>
         where id = #{id}
     </select>
-        
-    <insert id="insertChannel" parameterType="Channel" useGeneratedKeys="true" keyProperty="id">
+
+    <!-- 新增批量插入方法 -->
+    <insert id="insertChannelBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
         insert into tb_channel
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="channelCode != null and channelCode != ''">channel_code,</if>
-            <if test="skuId != null">sku_id,</if>
-            <if test="vmId != null">vm_id,</if>
-            <if test="innerCode != null and innerCode != ''">inner_code,</if>
-            <if test="maxCapacity != null">max_capacity,</if>
-            <if test="currentCapacity != null">current_capacity,</if>
-            <if test="lastSupplyTime != null">last_supply_time,</if>
-            <if test="createTime != null">create_time,</if>
-            <if test="updateTime != null">update_time,</if>
-         </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="channelCode != null and channelCode != ''">#{channelCode},</if>
-            <if test="skuId != null">#{skuId},</if>
-            <if test="vmId != null">#{vmId},</if>
-            <if test="innerCode != null and innerCode != ''">#{innerCode},</if>
-            <if test="maxCapacity != null">#{maxCapacity},</if>
-            <if test="currentCapacity != null">#{currentCapacity},</if>
-            <if test="lastSupplyTime != null">#{lastSupplyTime},</if>
-            <if test="createTime != null">#{createTime},</if>
-            <if test="updateTime != null">#{updateTime},</if>
-         </trim>
+        (channel_code, vm_id, inner_code, max_capacity, current_capacity, last_supply_time, create_time, update_time)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.channelCode}, #{item.vmId}, #{item.innerCode}, #{item.maxCapacity},
+            #{item.currentCapacity}, #{item.lastSupplyTime}, #{item.createTime}, #{item.updateTime})
+        </foreach>
+    </insert>
+    <insert id="insertChannel" parameterType="com.dkd.manage.domain.Channel">
+
     </insert>
 
     <update id="updateChannel" parameterType="Channel">

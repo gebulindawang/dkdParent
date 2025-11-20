@@ -44,6 +44,7 @@ public class ChannelServiceImpl implements IChannelService
         return channelMapper.selectChannelList(channel);
     }
 
+
     /**
      * 新增售货机货道
      * 
@@ -93,4 +94,17 @@ public class ChannelServiceImpl implements IChannelService
     {
         return channelMapper.deleteChannelById(id);
     }
+
+    /**
+     * 批量插入货道信息
+     * @param channelList 货道信息列表
+     * @return 插入记录数
+     */
+    public int insertChannelBatch(List<Channel> channelList){
+        return channelMapper.insertChannelBatch(channelList);
+    }
+
+
 }
+
+
