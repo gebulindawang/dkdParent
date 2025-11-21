@@ -1,6 +1,7 @@
 package com.dkd.manage.controller;
 
 import java.util.List;
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ import com.dkd.common.core.page.TableDataInfo;
 @RequestMapping("/manage/vm")
 public class VendingMachineController extends BaseController
 {
-    @Autowired
+    @Resource
     private IVendingMachineService vendingMachineService;
 
     /**
