@@ -19,6 +19,8 @@ public class ChannelServiceImpl implements IChannelService
 {
     @Autowired
     private ChannelMapper channelMapper;
+    @Autowired
+    private IChannelService channelService;
 
     /**
      * 查询售货机货道
@@ -102,6 +104,17 @@ public class ChannelServiceImpl implements IChannelService
      */
     public int insertChannelBatch(List<Channel> channelList){
         return channelMapper.insertChannelBatch(channelList);
+    }
+
+    /**
+     * 根据商品id集合统计货道数量
+     * @param skuId
+     * @return skuId
+     */
+    @Override
+    public int countChannelBySkuIds(Long[] skuId) {
+
+        return channelMapper.countChannelBySkuIds(skuId);
     }
 
 

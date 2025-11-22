@@ -38,6 +38,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectChannelVo"/>
         where id = #{id}
     </select>
+    <select id="countChannelBySkuIds" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        select count(1) from tb_channel where sku_id in
+        <foreach item="id" collection="array" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
 
     <!-- 新增批量插入方法 -->
     <insert id="insertChannelBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
