@@ -145,7 +145,10 @@ public class GlobalExceptionHandler
         log.error(e.getMessage(), e);
         if (e.getMessage().contains("foreign")){
             return AjaxResult.error("无法删除，有其他数据引用");
+        } else if (e.getMessage().contains("Duplicate")) {
+            return AjaxResult.error("无法增加，已有相同商品类型");
         }
+
         return AjaxResult.error("数据完整性异常");
     }
 
