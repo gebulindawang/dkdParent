@@ -39,10 +39,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id = #{id}
     </select>
     <select id="countChannelBySkuIds" resultType="java.lang.Integer" parameterType="java.lang.Integer">
-        select count(1) from tb_channel where sku_id in
-        <foreach item="id" collection="array" open="(" close=")" separator=",">
-            #{id}
-        </foreach>
+<!--        select count(1) from tb_channel where sku_id in-->
+<!--        <foreach item="id" collection="array" open="(" close=")" separator=",">-->
+<!--            #{id}-->
+<!--        </foreach>-->
+            select count(1) from tb_channel where sku_id in
+            <foreach collection="array" item="id" separator="," open="(" close=")">
+                #{id}
+            </foreach>
     </select>
 
     <!-- 新增批量插入方法 -->
