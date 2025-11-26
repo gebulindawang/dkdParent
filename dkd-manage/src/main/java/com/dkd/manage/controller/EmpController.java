@@ -24,8 +24,7 @@ import com.dkd.manage.service.IEmpService;
 import com.dkd.common.utils.poi.ExcelUtil;
 import com.dkd.common.core.page.TableDataInfo;
 
-import static com.dkd.common.constant.DkdContants.EMP_STATUS_NORMAL;
-import static com.dkd.common.constant.DkdContants.ROLE_CODE_BUSINESS;
+import static com.dkd.common.constant.DkdContants.*;
 
 /**
  * 人员列表Controller
@@ -128,4 +127,21 @@ public class EmpController extends BaseController
         return success(empService.selectEmpList(emp));
     }
 
+    /**
+     * 根据售货机获取操作人员列表
+     */
+    @GetMapping("/operationList/{innerCode}")
+    public  AjaxResult operationList(@PathVariable String innerCode) {
+       //1.查询售货机信息
+       VendingMachine vendingMachine = iVendingMachineService.selectVendingMachineByInnerCode(innerCode);
+       if (vendingMachine == null){
+           return error("售货机不存在");
+       }
+       //2.根据角色id，角色编号，员工状态查询运维人员列表
+        Emp emp = new Emp();
+       emp.setRegionId(vendingMachine.getRegionId());
+       emp.setRoleCode(ROLE_CODE_OPERATOR);//运维人员
+         emp.setStatus(EMP_STATUS_NORMAL);
+        return success(empService.selectEmpList(emp));
+    }
 }
