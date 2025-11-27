@@ -4,6 +4,9 @@ import java.util.List;
 import com.dkd.manage.domain.Channel;
 import com.dkd.manage.domain.dto.ChannelConfigDto;
 import com.dkd.manage.domain.vo.ChannelVo;
+import org.apache.ibatis.annotations.Select;
+
+@SuppressWarnings("all")
 
 /**
  * 售货机货道Service接口

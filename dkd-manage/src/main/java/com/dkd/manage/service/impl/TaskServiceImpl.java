@@ -2,6 +2,7 @@ package com.dkd.manage.service.impl;
 
 import java.util.List;
 import com.dkd.common.utils.DateUtils;
+import com.dkd.manage.domain.dto.TaskDto;
 import com.dkd.manage.domain.vo.TaskVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -103,5 +104,16 @@ public class TaskServiceImpl implements ITaskService
      */
     public List<TaskVo> selectTaskVoList(Task task) {
         return taskMapper.selectTaskVoList(task);
+    }
+
+    /**
+     * 新增工单
+     *
+     * @param taskDto 工单
+     * @return 结果
+     */
+    public int insertTaskDto(TaskDto taskDto) {
+        return 0;
+
     }
 }

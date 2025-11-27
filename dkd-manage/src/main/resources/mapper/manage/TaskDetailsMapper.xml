@@ -58,7 +58,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateTaskDetails" parameterType="TaskDetails">
         update tb_task_details
         <trim prefix="SET" suffixOverrides=",">
-            <if test="taskId != null">task_id = #{taskId},</if>
+            <if test="taskId != null">task_id = #{taskId},</if>iii
             <if test="channelCode != null">channel_code = #{channelCode},</if>
             <if test="expectCapacity != null">expect_capacity = #{expectCapacity},</if>
             <if test="skuId != null">sku_id = #{skuId},</if>
@@ -78,4 +78,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{detailsId}
         </foreach>
     </delete>
+
+    <insert id="batchInsertTaskDetails" useGeneratedKeys="true" keyProperty="detailsId">
+        insert into tb_task_details (
+        task_id,
+        channel_code,
+        expect_capacity,
+        sku_id,
+        sku_name,
+        sku_image
+        )
+        values
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.taskId},
+            #{item.channelCode},
+            #{item.expectCapacity},
+            #{item.skuId},
+            #{item.skuName},
+            #{item.skuImage}
+            )
+        </foreach>
+    </insert>
+
+
+
 </mapper>
